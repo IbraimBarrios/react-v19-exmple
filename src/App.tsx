@@ -1,35 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+
+import mockUploadImage from "./utils/mockUploadImage";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [file, setFile] = useState<File>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>("");
+
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    if (acceptedFiles.length) {
+      const file = acceptedFiles[0];
+
+      setFile(file);
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: { "image/png": [".png"], "image/jpeg": [".jpeg"] },
+  });
+
+  const handleUploadImage = async () => {
+    if (!file) return;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await mockUploadImage(file);
+      console.log(response);
+    } catch (error) {
+      setError("Error al subir la imagen");
+    } finally {
+      setLoading(false);
+      setFile(undefined);
+    }
+  };
+
+  const renderDropzoneContent = () => {
+    if (file) {
+      return <p>{file.name}</p>;
+    }
+
+    return (
+      <p className="drop-title">
+        {isDragActive ? "Suelta aqui" : "Arrastra aqui tus archivos"}
+      </p>
+    );
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container">
+      <h2 className="title"> Administrador de archivos</h2>
+      <div className="input-area" {...getRootProps()}>
+        <input {...getInputProps()} />
+        {renderDropzoneContent()}
+        {!!error && <p className="error">{error}</p>}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      {!!file && (
+        <button onClick={handleUploadImage} className="upload-btn">
+          {loading ? "Subiendo..." : "Subir"}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
