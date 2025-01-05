@@ -1,11 +1,17 @@
+export type initialStateType = {
+  success: boolean;
+  result: Record<string, string> | null;
+  error: string | null;
+};
+
 const uploadImage = async (
-  previousState: { success: boolean; result: Record<string, string> },
+  previousState: initialStateType,
   fromData: FormData
 ) => {
   const image = fromData.get("file");
-  console.log(image);
+  console.log(image, previousState);
 
-  const result = new Promise((resolve) => {
+  const result: Record<string, string> = await new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         url: "https://via.placeholder.com/150",
@@ -14,7 +20,7 @@ const uploadImage = async (
     });
   });
 
-  return { success: true, result };
+  return { success: true, result, error: null };
 };
 
 export default uploadImage;
