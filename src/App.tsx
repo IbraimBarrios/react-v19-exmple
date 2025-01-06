@@ -6,6 +6,7 @@ import "./App.css";
 import SubmitButton from "./components/SubmitButton";
 import CustomInput from "./components/CustomInput";
 import ThemeContext from "./context/ThemeContext";
+import BlogItem from "./components/BlogItem";
 // import CommentsSection from "./components/CommentsSection";
 
 const initialState: initialStateType = {
@@ -61,6 +62,7 @@ function App() {
 
   return (
     <form className="container" action={formAction}>
+      <title>Container - Main</title>
       <h2 className="title"> Administrador de archivos</h2>
       <div className="input-area" {...getRootProps()}>
         <input {...getInputProps()} name="file" />
@@ -68,7 +70,10 @@ function App() {
         {!success && !!error && <p className="error">{error}</p>}
       </div>
       {!!file && <SubmitButton />}
-      <CustomInput label="Prueba" ref={inputContainerRef} inputRef={inputRef} />
+      {/* <CustomInput label="Prueba" ref={inputContainerRef} inputRef={inputRef} /> */}
+
+      <BlogItem />
+
     </form>
   );
 
