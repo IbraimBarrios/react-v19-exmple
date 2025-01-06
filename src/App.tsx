@@ -72,7 +72,7 @@ function App() {
       {!!file && <SubmitButton />}
       {/* <CustomInput label="Prueba" ref={inputContainerRef} inputRef={inputRef} /> */}
 
-      <BlogItem />
+      {/* <BlogItem /> */}
 
     </form>
   );
