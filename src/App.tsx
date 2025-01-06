@@ -1,10 +1,11 @@
-import { useCallback, useState, useActionState, useRef } from "react";
+import { useCallback, useState, useActionState, useRef, use } from "react";
 import { useDropzone } from "react-dropzone";
 
 import mockUploadImage, { initialStateType } from "./utils/mockUploadImage";
 import "./App.css";
 import SubmitButton from "./components/SubmitButton";
 import CustomInput from "./components/CustomInput";
+import ThemeContext from "./context/ThemeContext";
 // import CommentsSection from "./components/CommentsSection";
 
 const initialState: initialStateType = {
@@ -14,6 +15,11 @@ const initialState: initialStateType = {
 };
 
 function App() {
+  // ejemeplo de use en react v19
+  const theme = use(ThemeContext);
+  const myPromise = use(Promise.resolve({ data: [{id: 1, value: 'one'}]}));
+  // ejemeplo de use en react v19
+
   const inputRef = useRef<HTMLInputElement>(null);
   const inputContainerRef = useRef<HTMLDivElement>(null);
   const [file, setFile] = useState<File>();
@@ -21,6 +27,9 @@ function App() {
     mockUploadImage,
     initialState
   );
+
+  console.log('Theme',theme);
+  console.log('myPromice', myPromise);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     console.log(inputRef.current, "inputRef");
