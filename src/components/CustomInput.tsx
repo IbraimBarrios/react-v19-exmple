@@ -1,25 +1,26 @@
-import { forwardRef, InputHTMLAttributes, RefObject } from "react";
+import { FC, InputHTMLAttributes, RefObject } from "react";
 
 type CustomInputProps = {
   label?: string;
   errorMsg?: string;
   inputRef?: RefObject<HTMLInputElement | null>;
+  ref?: RefObject<HTMLDivElement | null>;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const CustomInput = forwardRef<HTMLDivElement, CustomInputProps>(
-  ({ label, errorMsg, inputRef, ...inputProps }, ref) => {
-    console.log(ref);
-
-    return (
-      <div ref={ref}>
-        <label>
-          {label}
-          <input {...inputProps} ref={inputRef} />
-        </label>
-        {!!errorMsg && <span>{errorMsg}</span>}
-      </div>
-    );
-  }
+const CustomInput: FC<CustomInputProps> = ({
+  label,
+  errorMsg,
+  inputRef,
+  ref,
+  ...inputProps
+}) => (
+  <div ref={ref}>
+    <label>
+      {label}
+      <input {...inputProps} ref={inputRef} />
+    </label>
+    {!!errorMsg && <span>{errorMsg}</span>}
+  </div>
 );
 
 export default CustomInput;

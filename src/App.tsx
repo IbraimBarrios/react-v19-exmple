@@ -23,8 +23,8 @@ function App() {
   );
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    console.log(inputRef, "inputRef");
-    console.log(inputContainerRef, "inputContainerRef");
+    console.log(inputRef.current, "inputRef");
+    console.log(inputContainerRef.current, "inputContainerRef");
 
     if (acceptedFiles.length) {
       const file = acceptedFiles[0];
