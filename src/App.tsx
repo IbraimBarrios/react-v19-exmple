@@ -4,6 +4,7 @@ import { useDropzone } from "react-dropzone";
 import mockUploadImage, { initialStateType } from "./utils/mockUploadImage";
 import "./App.css";
 import SubmitButton from "./components/SubmitButton";
+import CommentsSection from "./components/CommentsSection";
 
 const initialState: initialStateType = {
   success: false,
@@ -13,7 +14,10 @@ const initialState: initialStateType = {
 
 function App() {
   const [file, setFile] = useState<File>();
-  const [{ error, success }, formAction] = useActionState(mockUploadImage, initialState);
+  const [{ error, success }, formAction] = useActionState(
+    mockUploadImage,
+    initialState
+  );
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (acceptedFiles.length) {
@@ -40,7 +44,7 @@ function App() {
     );
   };
 
-  return (
+  /*return (
     <form className="container" action={formAction}>
       <h2 className="title"> Administrador de archivos</h2>
       <div className="input-area" {...getRootProps()}>
@@ -50,7 +54,9 @@ function App() {
       </div>
       {!!file && <SubmitButton />}
     </form>
-  );
+  );*/
+
+  return <CommentsSection />;
 }
 
 export default App;
